@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : 'http://localhost:5000/api';
+const rawApiUrl = import.meta.env.VITE_API_URL || 'https://ai-crm-backend-2377.onrender.com';
+const API_BASE = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl}/api`;
 
 const getHeaders = () => {
   const token = localStorage.getItem('crm_token');
