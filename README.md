@@ -12,6 +12,8 @@
 ## 💻 DEMO AND GITHUB REPOSITORY LINKS
 
 > [!IMPORTANT]
+> **Live Vercel Frontend:** [https://ai-crm-vprl.vercel.app/](https://ai-crm-vprl.vercel.app/)  
+> **Live Render Backend:** [https://ai-crm-backend-2377.onrender.com](https://ai-crm-backend-2377.onrender.com)  
 > **GitHub Repository:** [https://github.com/deepansr007-hash/AI-CRM-.git](https://github.com/deepansr007-hash/AI-CRM-.git)  
 > **MongoDB URI:** `mongodb+srv://deepan:124UCS022@cluster0.ryhui3i.mongodb.net/?appName=Cluster0`
 
