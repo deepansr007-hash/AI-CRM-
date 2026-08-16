@@ -96,14 +96,17 @@ export function Login() {
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
           <div className="form-group" style={{ marginBottom: 0 }}>
-            <label className="form-label">Username</label>
+            <label htmlFor="username" className="form-label">Username</label>
             <div style={{ position: 'relative' }}>
               <User size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '14px', top: '14px' }} />
               <input 
+                id="username"
+                name="username"
                 type="text" 
                 value={username} 
                 onChange={e => setUsername(e.target.value)} 
                 required 
+                autoComplete="username"
                 className="glass-input" 
                 placeholder="Enter username"
                 style={{ paddingLeft: '42px' }}
@@ -112,14 +115,17 @@ export function Login() {
           </div>
 
           <div className="form-group" style={{ marginBottom: 0 }}>
-            <label className="form-label">Password</label>
+            <label htmlFor="password" className="form-label">Password</label>
             <div style={{ position: 'relative' }}>
               <Lock size={16} color="var(--text-muted)" style={{ position: 'absolute', left: '14px', top: '14px' }} />
               <input 
+                id="password"
+                name="password"
                 type="password" 
                 value={password} 
                 onChange={e => setPassword(e.target.value)} 
                 required 
+                autoComplete="current-password"
                 className="glass-input" 
                 placeholder="Enter password"
                 style={{ paddingLeft: '42px' }}

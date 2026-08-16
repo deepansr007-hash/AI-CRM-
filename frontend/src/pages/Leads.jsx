@@ -457,8 +457,9 @@ export function Leads() {
             <form onSubmit={handleFormSubmit}>
               
               <div className="form-group">
-                <label className="form-label">Full Name *</label>
+                <label htmlFor="lead-name" className="form-label">Full Name *</label>
                 <input 
+                  id="lead-name"
                   type="text" 
                   name="name" 
                   value={formData.name} 
@@ -471,8 +472,9 @@ export function Leads() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div className="form-group">
-                  <label className="form-label">Email Address *</label>
+                  <label htmlFor="lead-email" className="form-label">Email Address *</label>
                   <input 
+                    id="lead-email"
                     type="email" 
                     name="email" 
                     value={formData.email} 
@@ -483,8 +485,9 @@ export function Leads() {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Phone Number</label>
+                  <label htmlFor="lead-phone" className="form-label">Phone Number</label>
                   <input 
+                    id="lead-phone"
                     type="text" 
                     name="phone" 
                     value={formData.phone} 
@@ -497,8 +500,9 @@ export function Leads() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div className="form-group">
-                  <label className="form-label">Company Name</label>
+                  <label htmlFor="lead-company" className="form-label">Company Name</label>
                   <input 
+                    id="lead-company"
                     type="text" 
                     name="company" 
                     value={formData.company} 
@@ -508,8 +512,9 @@ export function Leads() {
                   />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Est Contract Value ($)</label>
+                  <label htmlFor="lead-value" className="form-label">Est Contract Value ($)</label>
                   <input 
+                    id="lead-value"
                     type="number" 
                     name="value" 
                     value={formData.value} 
