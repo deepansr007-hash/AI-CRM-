@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # 1. Express Backend API Gateway env
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: crm-backend-api
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - JWT_SECRET=super_secret_ai_crm_token_key_13579
+      - DB_PATH=/app/database/crm.db
+      - AI_ENGINE_URL=http://ai-engine:8000
+    volumes:
+      - crm-db-data:/app/database
+    depends_on:
+      - ai-engine
+    networks:
+      - crm-network
+
+  # 2. Python ML Inference Service
+  ai-engine:
+    build:
+      context: ./ai-engine
+      dockerfile: Dockerfile
+    container_name: crm-ai-engine
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+    networks:
+      - crm-network
+
+  # 3. React SPA Frontend Dashboard
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: crm-frontend-spa
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - crm-network
+
+volumes:
+  crm-db-data:
+
+networks:
+  crm-network:
+    driver: bridge

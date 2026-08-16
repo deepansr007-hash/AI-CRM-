@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Production builds
+dist/
+build/
+**/dist/
+**/build/
+
+# IDE & OS
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+
+# Python / AI Engine
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Environment local overrides (keep sample tracked)
+# .env
