@@ -1,6 +1,25 @@
 const rawApiUrl = import.meta.env.VITE_API_URL || 'https://ai-crm-backend-2377.onrender.com';
 const API_BASE = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl}/api`;
 
+const fetchWithTimeout = async (url, options = {}, timeoutMs = 10000) => {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    clearTimeout(id);
+    if (error.name === 'AbortError') {
+      throw new Error('Server response timed out.');
+    }
+    throw error;
+  }
+};
+
 const getHeaders = () => {
   const token = localStorage.getItem('crm_token');
   const headers = {
@@ -31,7 +50,7 @@ export const api = {
   // Authentication services
   auth: {
     login: async (username, password) => {
-      const res = await fetch(`${API_BASE}/auth/login`, {
+      const res = await fetchWithTimeout(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify({ username, password })
@@ -48,7 +67,7 @@ export const api = {
       window.dispatchEvent(new Event('crm_auth_change'));
     },
     getCurrentUser: async () => {
-      const res = await fetch(`${API_BASE}/auth/me`, {
+      const res = await fetchWithTimeout(`${API_BASE}/auth/me`, {
         headers: getHeaders()
       });
       return handleResponse(res);

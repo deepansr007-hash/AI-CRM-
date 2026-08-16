@@ -18,24 +18,38 @@ export function useAuth() {
 
     window.addEventListener('crm_auth_change', handleAuthChange);
 
-    // Verify token freshness with server
+    // Verify token freshness with server safely in background
     const verifyToken = async () => {
       const storedToken = localStorage.getItem('crm_token');
-      if (storedToken) {
-        try {
-          const freshUser = await api.auth.getCurrentUser();
+      if (!storedToken) {
+        setChecking(false);
+        return;
+      }
+
+      // If storedUser exists in localStorage, unlock UI immediately while validating in background
+      const storedUser = localStorage.getItem('crm_user');
+      if (storedUser) {
+        setChecking(false);
+      }
+
+      try {
+        const freshUser = await api.auth.getCurrentUser();
+        if (freshUser) {
           localStorage.setItem('crm_user', JSON.stringify(freshUser));
           setUser(freshUser);
-        } catch (e) {
-          console.warn('[useAuth] Token validation failed:', e.message);
-          // Fallback clears invalid token
+        }
+      } catch (e) {
+        console.warn('[useAuth] Background token validation warning:', e.message);
+        // Only clear token if server explicitly rejected auth (401 / session expired)
+        if (e.message?.toLowerCase().includes('expired') || e.message?.toLowerCase().includes('unauthorized') || e.message?.toLowerCase().includes('invalid')) {
           localStorage.removeItem('crm_token');
           localStorage.removeItem('crm_user');
           setUser(null);
           setToken(null);
         }
+      } finally {
+        setChecking(false);
       }
-      setChecking(false);
     };
 
     verifyToken();
