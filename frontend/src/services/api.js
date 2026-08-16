@@ -1,7 +1,7 @@
 const rawApiUrl = import.meta.env.VITE_API_URL || 'https://ai-crm-backend-2377.onrender.com';
 const API_BASE = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl}/api`;
 
-const fetchWithTimeout = async (url, options = {}, timeoutMs = 10000) => {
+const fetchWithTimeout = async (url, options = {}, timeoutMs = 60000) => {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -14,7 +14,7 @@ const fetchWithTimeout = async (url, options = {}, timeoutMs = 10000) => {
   } catch (error) {
     clearTimeout(id);
     if (error.name === 'AbortError') {
-      throw new Error('Server response timed out.');
+      throw new Error('Server is taking long to respond. Render free tier backend may be waking up from sleep. Please try again in a few seconds.');
     }
     throw error;
   }
